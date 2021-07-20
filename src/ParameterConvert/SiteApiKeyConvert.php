@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Route;
 /**
  * Class SiteApiKeyConvert.
  *
- * @package Drupal\practice\ParamConverter
+ * @package Drupal\site_api_key\ParamConverter
  */
 class SiteApiKeyConvert implements ParamConverterInterface {
 
