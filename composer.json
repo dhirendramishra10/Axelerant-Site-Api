@@ -1,0 +1,13 @@
+{
+    "name": "drupal/site_api_key",
+    "description": "Site Configuration Api.",
+    "type": "drupal-module",
+    "keywords": ["Drupal", "Drupal 8", "Serialization", "Node"],
+    "authors": [
+        {
+            "name": "Dhirendra Mishra",
+            "email": "dhirenmishra10@gmail.com",
+            "role": "Drupal Developer"
+        }
+    ]
+}

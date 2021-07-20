@@ -9,42 +9,63 @@ namespace Drupal\site_api_key\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\NodeInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * OutputController for the site_api_key module.
+ * Class OutputController.
+ *
+ * @package Drupal\site_api_key\Controller
  */
 class OutputController extends ControllerBase {
 
   /**
-   * Function to render JSON output for page node type.
+   * The Serializer.
    *
-   * @param $site_api_key
-   *   A String passed from the request URL
-   *
-   * @param $nid
-   *   A integer passed from the request URL
-   *
-   * @return JsonResponse
-   *
-   * A Json Response containing Node info or Error Message
-   *
+   * @var \Symfony\Component\Serializer\SerializerInterface
+   *   Serializer Dependency will be stored inside this.
    */
-  public function page_node_json($site_api_key, NodeInterface $node) {
-    $json_res = array();
+  protected $serializer;
 
-    // Get the Site API Key from configuration
-    $api_key = $this->config('site_api.settings')->get('siteapikey');
+  /**
+   * NodeSerializer constructor.
+   *
+   * @param \Symfony\Component\Serializer\SerializerInterface $serializerInterface
+   *   Dependency.
+   */
+  public function __construct(SerializerInterface $serializerInterface) {
+    // Store the serializer instance inside the current Class Object.
+    $this->serializer = $serializerInterface;
+  }
 
-    // Check if the API Key entered in the URL is Valid
-    if ($site_api_key === $api_key) {
-      // Respond with the json representation of the node
-      return new JsonResponse($node->toArray(), 200, ['Content-Type'=> 'application/json']);
-    }
-    else {
-      echo t('Invalid Site Api Key.');
-      die();
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    // Loading the service 'serializer'(defined by serialization module) in the
+    // Container.
+    return new static(
+      $container->get('serializer')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function page_node_json(NodeInterface $node) {
+
+    // We are using serialize function of serializer Object.
+    // Step 1: Converts the Node Object into an Normalized Array.
+    // Step 2: Converts The Normalized Array into Json Format(Our Case).
+    $serialized_node = $this->serializer->serialize($node, 'json');
+    // Build Output.
+    $build = [
+      '#type' => 'markup',
+      '#markup' => $serialized_node,
+    ];
+    
+    // Return the json markup.
+    return $build;
   } // end of function page_node_json
 
 } // end of class OutputController

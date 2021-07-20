@@ -5,5 +5,12 @@ site_api_key_json_url:
     _controller: '\Drupal\site_api_key\Controller\OutputController::page_node_json'
   requirements:
     _permission: 'access content'
+    _module_dependencies: 'node + serialization'
     _content_type_format: json
     _entity_bundles: 'node:page'
+  options:
+    parameters:
+      site_api_key:
+        type: siteapikey
+      node:
+        type: entity:node

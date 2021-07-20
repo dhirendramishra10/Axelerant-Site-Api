@@ -1,0 +1,6 @@
+services:
+  site_api_key.site_api_key_service:
+    class: Drupal\site_api_key\ParameterConvert\SiteApiKeyConvert
+    arguments: ['@config.factory']
+    tags:
+      - { name: paramconverter }

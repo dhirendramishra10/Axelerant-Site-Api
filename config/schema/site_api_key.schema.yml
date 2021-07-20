@@ -1,0 +1,8 @@
+# Schema for the configuration of the Site Configuration Api module.
+site_api_key.settings:
+  type: config_object
+  label: 'Site Info'
+  mapping:
+    siteapikey:
+      type: string
+      label: 'Site API Key'

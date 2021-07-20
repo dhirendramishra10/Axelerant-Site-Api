@@ -1,8 +1,10 @@
 name: Site Configuration API
 type: module
 description: 'Set configuration for a Site Api Key, provides JSON representation of a given node of type page.'
-core: 8.x
+core_version_requirement: ^8 || ^9
 version: 8.x-1.0
 package: Custom
+configure: system.site_information_settings
 dependencies:
-- serialization
+  - drupal:serialization
+  - drupal:node
