@@ -6,7 +6,6 @@ site_api_key_json_url:
   requirements:
     _permission: 'access content'
     _module_dependencies: 'node + serialization'
-    _content_type_format: json
     _entity_bundles: 'node:page'
   options:
     parameters:
